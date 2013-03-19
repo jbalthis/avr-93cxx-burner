@@ -135,7 +135,7 @@ void eeprom_write_data(int address, int data)
 
 	delay(10);
 }
-0b110000000
+
 // enable writing
 void eeprom_write_enable(void)
 {
