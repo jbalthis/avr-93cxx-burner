@@ -1,7 +1,6 @@
 #!/usr/bin/python2
 #
-# Write Maxon SM-4000 series eeprom.
-# 93C56
+# program 93C56
 #
 
 import serial
