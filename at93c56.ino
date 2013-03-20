@@ -266,29 +266,17 @@ void run_state(int state)
 	ran_state = 1;
 }
 
-void change_state(void)
+void enter_write_state(void)
 {
 	int i = 0;
-	
-	
-	if(current_state == STATE_READING) {
-		current_state = STATE_WRITING;
+
+	current_state = STATE_WRITING;
 		
-		for(i = 0; i < 5; i++) {
-			digitalWrite(LED_WRITE, HIGH);
-			delay(50);
-			digitalWrite(LED_WRITE, LOW);
-			delay(50);
-		}
-	} else {
-		current_state = STATE_READING;
-		
-		for(i = 0; i < 5; i++) {
-			digitalWrite(LED_READ, HIGH);
-			delay(50);
-			digitalWrite(LED_READ, LOW);
-			delay(50);
-		}
+	for(i = 0; i < 5; i++) {
+		digitalWrite(LED_WRITE, HIGH);
+		delay(50);
+		digitalWrite(LED_WRITE, LOW);
+		delay(50);
 	}
 }
 
@@ -312,9 +300,7 @@ void setup()
 	Serial.begin(9600);
 	
 	led_bling();
-	change_state();
-	
-	
+	current_state = STATE_READING;	
 }
 
 int probe_time = 0;
@@ -323,8 +309,8 @@ void loop()
 {
 	mode_button = digitalRead(MODE_BUTTON);
 	
-	if(eeprom_detected == 0 && mode_button == HIGH) {
-		change_state();
+	if(eeprom_detected == 0 && mode_button == HIGH && current_state != STATE_WRITING) {
+		enter_write_state();
 		delay(500);
 	}
 
